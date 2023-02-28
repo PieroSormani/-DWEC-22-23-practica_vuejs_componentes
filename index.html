@@ -15,7 +15,7 @@
 
         <h1 id="autor">Autor: Piero Sormani</h1>
 
-        <!-- https://vuejs.org/v2/guide/index.html -->
+       <!-- https://vuejs.org/v2/guide/index.html -->
         <div id="app">
             <!--
                  TODO: Aplicación VueJS. Ver archivo ./js/script.js
@@ -23,34 +23,42 @@
                - Para cada item: (https://vuejs.org/v2/guide/index.html#Conditionals-and-Loops)
                  - Crear un componente item-data
             -->
-
             <div class="jumbotron">
-                <h1 class="display-4" id="title">{{col.collection.title}}</h1>
+ 
+                <h1 class="display-4 text-center" id="title">{{ col.collection.title }}</h1>
+ 
             </div>
+ 
+            <div class="container">
+ 
+                <div class="row" style="margin-left: 1rem;">
+ 
+                    <div class="card-group">
+ 
+                        <item-data v-for="item in item" :item="item"></item-data>
+ 
+                    </div>               
+ 
+                </div>
+ 
+            </div>
+ 
         </div>
-
-        <div class="container">
-            <div class="row" style="margin-left: 1rem">
-            <div class="card-group">
-                <item-data v-for="item in item" :item="item"></item-data>
-            </div>
-            </div>
-        </div>
-
-
 
         <!-- Plantilla para el componente edit-form -->
         <script type="text/x-template" id="editForm">
 
             <dl v-for="data in item.data">
 
-                <dd>{{data.prompt}}</dd>
+                <dd>{{ data.prompt }}</dd>
+
                 <input v-if="data.prompt != description" type="text" v-model="data.value">
+
                 <textarea v-else v-model="data.value" type="text"></textarea>
 
-
             </dl>
-            <button @click="fromClose" class="btn btn-primary">Editar</button>
+
+            <button @click="fromClose" class="btn btn-dark">Editar</button>
             <!--
                  TODO: Componente edit-form
             -->
@@ -62,22 +70,39 @@
         <!-- Plantilla para el componente item-data -->
         <script type="text/x-template" id="itemData">
 
-            <div class="card" style="width: 20rem; margin-left: 2rem">
-            
+            <div class="card" style="width: 20rem; margin-left: 2rem;">
+                
                 <div class="card-body" v-show="datos">
-
+                    
                     <dl v-for="data in item.data">
 
-                        <dt>{{data.prompt}}</dt>
-                        <dd>{{data.value}}</dd>
+                        <dt>{{ data.prompt }}</dt>
+                        
+                        <dd>{{ data.value }}</dd>
 
                     </dl>
 
-                    <a :href="item.href" class="btn btn-primary">Saber más</a>
-                        <button @click="toggleEditFormVisibility" class="btn btn-secondary">Editar</button>
+                    <a :href=item.href class="btn btn-primary">Saber más...</a>
+
+                        <button @click="toggleEditFormVisibility" class="btn btn-dark">Editar</button>
+
                 </div>
 
-                
+                <div class="card-body" v-show="edicion">
+
+                    <dl v-for="data in item.data">
+
+                        <dt>{{ data.prompt }}</dt>
+
+                        <input v-if="data.prompt != 'Description'" type="text" v-model="data.value">
+
+                        <textarea v-else v-model="data.value" type="text"></textarea>
+
+                    </dl>
+
+                    <button @click="formClose" class="btn btn-primary">Editar y cerrar</button>
+
+                </div>
 
             </div>
             <!--
@@ -89,7 +114,10 @@
 
         <!-- TODO: Cargar librería VueJS y archivo js/script.js -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        
         <script src="./js/script.js"></script>
+
+
     </body>
 
 </html>
