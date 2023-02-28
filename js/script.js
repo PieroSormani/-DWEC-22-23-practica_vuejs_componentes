@@ -42,10 +42,54 @@ var server_data = {
 // TODO: Componente edit-form
 Vue.component('edit-form', {
 
+    data: function()
+    {
+        return{}
+    },
+
+    props: ['itemdata'],
+    emits: ['formClose'],
+
+    methods:
+    {
+        closeForm()
+        {
+            this.$emit('formClose');
+        }
+    },
+
+    template: '#editForm'
+
 })
 
 // TODO: Componente item-data
 Vue.component('item-data', {
+
+    data: function()
+    {
+
+    return{ datos: true, edicion: false}
+
+    },
+
+    props: ['item'],
+
+    methods:
+    {
+        toggleEditFormVisibility()
+        {
+            this.datos = false;
+            this.edicion = true;
+        },
+
+        formClose()
+        {
+            this.datos = true;
+            this.edicion = false;
+        }
+    },
+
+    template: '#itemData'
 
 })
 
